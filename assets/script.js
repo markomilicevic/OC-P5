@@ -193,13 +193,17 @@ function runSlider({ rootElement, slides, startAtIndex, imagesBaseUrl }) {
 		throw new Error("Start index is out of slides");
 	}
 
+	// Duplicate the references in order to have a clone of slides
+	// Preventing slides modifications after that component was started
+	const clonedSlides = slides.map((slide) => ({ ...slide }));
+
 	// This object represents the state of the slider component
 	const state = {
 		rootElement,
-		slides: [...slides], // Duplicate the reference in order to not update slides after slider started
+		slides: clonedSlides,
 		imagesBaseUrl,
 		currentIndex: startAtIndex,
-		currentSlide: slides[startAtIndex],
+		currentSlide: clonedSlides[startAtIndex],
 	};
 
 	// Arrows HTML are already present in the page, not needed to generate dynamically
