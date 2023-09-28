@@ -46,23 +46,39 @@ function bindArrows(state) {
 /**
  * @private
  *
- * Go to the previous slide
+ * Go to the previous slide or forward to the last one if the right slide has been reached
  *
  * @param {Object} state - The slider state
  */
 function goToPreviousSlide(state) {
-	switchSlide(state, state.currentIndex - 1);
+	const lastSlideIndex = state.slides.length - 1;
+
+	if (state.currentIndex === 0) {
+		// Forward
+		switchSlide(state, lastSlideIndex);
+	} else {
+		// Rewind
+		switchSlide(state, state.currentIndex - 1);
+	}
 }
 
 /**
  * @private
  *
- * Go to the next slide
+ * Go to the next slide or rewind to the first one if the last slide has been reached
  *
  * @param {Object} state - The slider state
  */
 function goToNextSlide(state) {
-	switchSlide(state, state.currentIndex + 1);
+	const lastSlideIndex = state.slides.length - 1;
+
+	if (state.currentIndex === lastSlideIndex) {
+		// Rewind
+		switchSlide(state, 0);
+	} else {
+		// Forward
+		switchSlide(state, state.currentIndex + 1);
+	}
 }
 
 /**
